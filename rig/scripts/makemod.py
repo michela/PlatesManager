@@ -199,7 +199,36 @@ class Compiler(ElementTree.TreeBuilder):
         self._channelElementIndex={}
         
     def endfile(self):
+        # write the master index.
+        # [sq, sqparent, 
+        #    storewhere, elemfstart, elemfstop, 
+        #    storecontentwhere, contentfstart, contentfstop]
         # release the references to the files we just finished with.
+        f = self.outfile_index
+        f.write('<?xml version="1.0"?>\n')
+        f.write('<channels><count>%d</count>\n' % len(self._channelElementIndex.keys()))
+        
+        for channel, channelindex in self._channelElementIndex.iteritems():
+            f.write('<channel><name>%s</name><count>%d</count>\n' % (
+                channel, len(channelindex.keys())))
+            # sort the sequence.
+            sequence = channelindex.keys()
+            sequence.sort()
+            sequence = map(channelindex.__getitem__, sequence)
+            # now write it.
+            for (sq, sqparent, metasource, metastart, metastop, 
+                contentsource, contentstart, contentstop) in sequence:
+                sqrepr = '''\
+        <sq-item><id>%d</id><sq>%d %d</sq><sq-parent-id>%d</sq-parent-id>
+        <source><name>%s</name><first>%d</first><last>%d</last></source>
+        <source><name>%s</name><first>%d</first><last>%d</last></source>
+        </sq-item>\n''' % (sq[0], sq[0], sq[1], sqparent, 
+                metasource, metastart, metastop,
+                contentsource, contentstart, contentstop)
+                f.write(sqrepr)
+            f.write('</channel>')
+        f.write('</channels>')
+        
         del self.infilename
         del self.outfilename_index
         del self.outfilename_content
@@ -284,7 +313,7 @@ class Compiler(ElementTree.TreeBuilder):
             if len(self._sequenceStack):
                 sqparent = self._sequenceStack[-1]
             else:
-                sqparent = (-1,-1)
+                sqparent = -1
             self.store_element(ElementCan(
                 sq=sq, sqparent=sqparent, tag=elem.tag, content=elem.text, 
                 children=[i for i in xrange(*sq)]), "meta", "content")
