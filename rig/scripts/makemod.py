@@ -8,6 +8,8 @@ try:
     from rig.modformat import STORE_FIELD_SEPERATOR, STORE_RECORD_SEPERATOR
 except ImportError:
     print "please add the parent folder of your rig source tree to your PYTHONPATH"
+    STORE_FIELD_SEPERATOR='<>'
+    STORE_RECORD_SEPERATOR='\n'    
 
 import sys, os, string
 try:
@@ -94,6 +96,9 @@ class Compiler(ElementTree.TreeBuilder):
             
         sq, sqparent = elem.sq, elem.sqparent
         
+        # KLUDGE: elements with no content come through with '\n'. Remove this.
+        if elem.content == '\n':
+            elem.content = ''
         if trace_actions: print "%s: store, %s with content:= %s" % (sq, elem.tag, elem.content)
         if trace_actions: print "element def -> %s, content -> %s" % (storewhere, storecontentwhere)
         
@@ -103,7 +108,9 @@ class Compiler(ElementTree.TreeBuilder):
         contentfile = getattr(self, 'outfile_' + storecontentwhere)
     
         contentrepr = [elem.content]
-        contentrepr = string.join(contentrepr, STORE_FIELD_SEPERATOR) + STORE_RECORD_SEPERATOR
+        contentrepr = string.join(contentrepr, STORE_FIELD_SEPERATOR)
+        if contentrepr: # KLUDGE: don't add the newline if we have no content.
+            contentrepr += STORE_RECORD_SEPERATOR
         
         contentfstart = contentfile.tell()
         contentfstop = contentfstart + len(contentrepr) -1
@@ -119,7 +126,8 @@ class Compiler(ElementTree.TreeBuilder):
             elemfstop = elemfstart + len(elemrepr) -1
         
         elemfile.write(elemrepr)
-        contentfile.write(contentrepr)
+        if contentfstart != contentfstop:
+            contentfile.write(contentrepr)
         
         indexentry = [sq, sqparent, 
             storewhere, elemfstart, elemfstop, 
