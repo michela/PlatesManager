@@ -1,8 +1,10 @@
 #!/usr/bin/env python
 
 # and example command line.
-# -c LINE store_coalesce -c SPEAKER store -c STAGEDIR store -c SPEECH store
+# -c LINE store -c SPEAKER store -c STAGEDIR store -c SPEECH store
 #
+
+from rig.modformat import STORE_FIELD_SEPERATOR, STORE_RECORD_SEPERATOR
 
 import sys, os, string
 try:
@@ -12,7 +14,7 @@ except ImportError:
 
 from elementtree import ElementTree
 
-trace_actions=False
+trace_actions=True
 
 class Error(Exception):
    pass
@@ -76,7 +78,6 @@ class Compiler(ElementTree.TreeBuilder):
             'strip':1, 
             # strip has no sub actions.    
             'store':2, 
-            'coalesce':3, # can combine with store
             'justboundary':5 # can combine with store
         }
         applicationOrder = [(v,k) for (k,v) in self.mapActionApplicationOrder.iteritems()]
@@ -85,7 +86,51 @@ class Compiler(ElementTree.TreeBuilder):
         for (v,k) in applicationOrder:
             self.mapApplicationOrderAction[v]=k
         del applicationOrder
+    
+    def store_element(self, elem, storewhere, storecontentwhere):
+            
+        sq, sqparent = elem.sq, elem.sqparent
+        
+        if trace_actions: print "%s: store, %s with content:= %s" % (sq, elem.tag, elem.content)
+        if trace_actions: print "element def -> %s, content -> %s" % (storewhere, storecontentwhere)
+        
+        assert storewhere != "index" and storecontentwhere != "index"
+        
+        elemfile = getattr(self, 'outfile_' + storewhere)
+        contentfile = getattr(self, 'outfile_' + storecontentwhere)
+    
+        contentrepr = [elem.content]
+        contentrepr = string.join(contentrepr, STORE_FIELD_SEPERATOR) + STORE_RECORD_SEPERATOR
+        
+        contentfstart = contentfile.tell()
+        contentfstop = contentfstart + len(contentrepr) -1
+        
+        elemrepr = [elem.tag, str(len(elem.children))]
+        elemrepr = string.join(elemrepr, STORE_FIELD_SEPERATOR) + STORE_RECORD_SEPERATOR
+
+        if elemfile is contentfile:
+            elemfstart = contentfstop + 1
+            elemfstop = elemfstart + len(elemrepr) -1
+        else:
+            elemfstart = elemfile.tell()
+            elemfstop = elemfstart + len(elemrepr) -1
+        
+        elemfile.write(elemrepr)
+        contentfile.write(contentrepr)
+        
+        indexentry = [sq, sqparent, 
+            storewhere, elemfstart, elemfstop, 
+            storecontentwhere, contentfstart, contentfstop]
                 
+        # keeping the entire index in memory for now ...
+        self._channelElementIndex.setdefault(elem.tag,{})[sq[0]]=indexentry
+        self._elementIndex[sq[0]]=indexentry
+        
+        # keeping the elements around in memory for now ...
+        self._elements[sq[0]] = elem
+
+        
+        
     def beginfile(self, options, infilename, infile):
         self.compilemore_chunksize = 32768 # MAGIC
         self.infilename = os.path.abspath(infilename)
@@ -103,11 +148,10 @@ class Compiler(ElementTree.TreeBuilder):
         self.outfilename_content = os.path.join(self.outpath, self.modname) + '.content' # MAGIC
         self.outfilename_mod = os.path.join(self.outpath, self.modname) + '.mod' # MAGIC
         
-        if 0: # work in progress
-            self.outfile_index = file(self.outfilename_index, 'w')
-            self.outfile_meta = file(self.outfilename_meta, 'w')
-            self.outfile_content = file(self.outfilename_content, 'w')
-            self.outfile_mod = file(self.outfilename_mod, 'w')
+        self.outfile_index = file(self.outfilename_index, 'w')
+        self.outfile_meta = file(self.outfilename_meta, 'w')
+        self.outfile_content = file(self.outfilename_content, 'w')
+        self.outfile_mod = file(self.outfilename_mod, 'w')
         
         self.channels = {}
         for (name, actions) in options.channel_actions:
@@ -140,6 +184,7 @@ class Compiler(ElementTree.TreeBuilder):
         # self.antiSequenceStack=[]
         
         self._elements={}
+        self._elementIndex={}
         self._channelElementIndex={}
         
     def endfile(self):
@@ -148,12 +193,11 @@ class Compiler(ElementTree.TreeBuilder):
         del self.outfilename_index
         del self.outfilename_content
         del self.outfilename_mod
-        if 0: # work in progress        
-            # AND make damned sure the data is pushed through any IO buffering.
-            self.infile.flush(); self.infile.close(); del self.infile
-            self.outfile_index.flush(); self.outfile_index.close(); del self.outfile_index
-            self.outfile_content.flush(); self.outfile_content.close(); del self.outfile_content
-            self.outfile_mod.flush(); self.outfile_mod.close(); del self.outfile_mod
+        # AND make damned sure the data is pushed through any IO buffering.
+        self.infile.flush(); self.infile.close(); del self.infile
+        self.outfile_index.flush(); self.outfile_index.close(); del self.outfile_index
+        self.outfile_content.flush(); self.outfile_content.close(); del self.outfile_content
+        self.outfile_mod.flush(); self.outfile_mod.close(); del self.outfile_mod
         
     def compilemore(self):
         data = self.infile.read(self.compilemore_chunksize)
@@ -226,50 +270,14 @@ class Compiler(ElementTree.TreeBuilder):
     def store(self, elem, start=False, attrs=None):
         sq = self.sequence_advance(start)
         if not start:
-            self._elements[sq[0]] = ElementCan(
-                tag=elem.tag, sq=sq, content=elem.text, 
-                children=[i for i in xrange(*sq)])
-            self._channelElementIndex.setdefault(elem.tag,[]).append(sq[0])
-            if trace_actions: print "%s: store, %s with content:= %s" % (sq, elem.tag, elem.text)
-            elem.clear()
-            
-    def store_coalesce(self, elem, start=False, attrs=None):
-        '''Coalesce ajacent elements with the same tag.
-        
-        Note: assuming all content is text for now.
-        
-        Note: assuming tags we are coalesceing don't appear at 
-        multiple levels of the element tree.
-        
-        Note: multiple tag types to coalesce at the same level. 
-        we only coalesce contiguous runs of a tag.
-        '''
-        
-        # get current sequence, at this elements stack level, don't advance yet.
-        sq = self.sequence(start)
-        if start:
-            self.sequence_advance(start)
-        else:
-            prevStoredElem = self._elements[sq[0]]
-            if prevStoredElem.tag == elem.tag:
-                # Note: the " " is an ugly hack to compensate for removal of the implicit newline.
-                prevStoredElem.content += " " + elem.text
-                prevStoredElem.children += [i for i in xrange(sq[1], self._sequence)]
-                prevStoredElem.sq=(sq[0], self._sequence - 1)
-                if trace_actions: print "%s: store_coalesce ,%s with content:= %s" % (
-                    prevStoredElem.sq, prevStoredElem.tag, 
-                    prevStoredElem.content)
-                elem.clear()
-                self._sequence -= 1
-                self.sequence_advance(start)
+            if len(self._sequenceStack):
+                sqparent = self._sequenceStack[-1]
             else:
-                
-                sq = self.sequence_advance(start)
-                
-                self._elements[sq[0]] = ElementCan(
-                    tag=elem.tag, sq=sq, content=elem.text, 
-                    children=[i for i in xrange(*sq)])
-                self._channelElementIndex.setdefault(elem.tag,[]).append(sq[0])
+                sqparent = (-1,-1)
+            self.store_element(ElementCan(
+                sq=sq, sqparent=sqparent, tag=elem.tag, content=elem.text, 
+                children=[i for i in xrange(*sq)]), "meta", "content")
+            elem.clear()
                 
     def store_justboundary(self, elem, start=False, attrs=None):
         sq = self.sequence_advance(start)
@@ -352,17 +360,19 @@ def main(options, *args):
     try:
         parser = ElementTree.XMLTreeBuilder()
         compiler = parser._target = Compiler(parser, options) # plug in a custom builder
-        if args and os.path.isfile(args[0]):
-            compiler.beginfile(options, args[0], file(os.path.abspath(args[0])))
-            while compiler.compilemore():
-                pass
-        else:
-            compiler.beginfile(options, 'test_data_short.xml',  StringIO(test_data_short))
-            while compiler.compilemore():
-                pass
-        compiler.endfile()
+        try:
+            if args and os.path.isfile(args[0]):
+                compiler.beginfile(options, args[0], file(os.path.abspath(args[0])))
+                while compiler.compilemore():
+                    pass
+            else:
+                compiler.beginfile(options, 'test_data_short.xml',  StringIO(test_data_short))
+                while compiler.compilemore():
+                    pass
+        finally:
+            compiler.endfile()
         
-        if 1:
+        if 0:
             sequence = parser._target._elements.keys()
             sequence.sort()
             for q in sequence:
