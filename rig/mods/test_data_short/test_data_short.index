@@ -1,0 +1,147 @@
+<?xml version="1.0"?>
+<channels><count>4</count>
+<channel><name>SPEECH</name><count>10</count>
+        <sq-item><id>1</id><sq>1 5</sq><sq-parent-id>-1</sq-parent-id>
+        <source><name>meta</name><first>39</first><last>48</last></source>
+        <source><name>content</name><first>121</first><last>120</last></source>
+        </sq-item>
+        <sq-item><id>5</id><sq>5 9</sq><sq-parent-id>-1</sq-parent-id>
+        <source><name>meta</name><first>76</first><last>85</last></source>
+        <source><name>content</name><first>194</first><last>193</last></source>
+        </sq-item>
+        <sq-item><id>9</id><sq>9 12</sq><sq-parent-id>-1</sq-parent-id>
+        <source><name>meta</name><first>105</first><last>114</last></source>
+        <source><name>content</name><first>239</first><last>238</last></source>
+        </sq-item>
+        <sq-item><id>12</id><sq>12 15</sq><sq-parent-id>-1</sq-parent-id>
+        <source><name>meta</name><first>134</first><last>143</last></source>
+        <source><name>content</name><first>268</first><last>267</last></source>
+        </sq-item>
+        <sq-item><id>15</id><sq>15 18</sq><sq-parent-id>-1</sq-parent-id>
+        <source><name>meta</name><first>163</first><last>172</last></source>
+        <source><name>content</name><first>297</first><last>296</last></source>
+        </sq-item>
+        <sq-item><id>18</id><sq>18 21</sq><sq-parent-id>-1</sq-parent-id>
+        <source><name>meta</name><first>192</first><last>201</last></source>
+        <source><name>content</name><first>337</first><last>336</last></source>
+        </sq-item>
+        <sq-item><id>21</id><sq>21 24</sq><sq-parent-id>-1</sq-parent-id>
+        <source><name>meta</name><first>221</first><last>230</last></source>
+        <source><name>content</name><first>369</first><last>368</last></source>
+        </sq-item>
+        <sq-item><id>24</id><sq>24 27</sq><sq-parent-id>-1</sq-parent-id>
+        <source><name>meta</name><first>250</first><last>259</last></source>
+        <source><name>content</name><first>397</first><last>396</last></source>
+        </sq-item>
+        <sq-item><id>27</id><sq>27 30</sq><sq-parent-id>-1</sq-parent-id>
+        <source><name>meta</name><first>279</first><last>288</last></source>
+        <source><name>content</name><first>415</first><last>414</last></source>
+        </sq-item>
+        <sq-item><id>30</id><sq>30 34</sq><sq-parent-id>-1</sq-parent-id>
+        <source><name>meta</name><first>316</first><last>325</last></source>
+        <source><name>content</name><first>489</first><last>488</last></source>
+        </sq-item>
+</channel><channel><name>LINE</name><count>13</count>
+        <sq-item><id>3</id><sq>3 4</sq><sq-parent-id>1</sq-parent-id>
+        <source><name>meta</name><first>23</first><last>30</last></source>
+        <source><name>content</name><first>55</first><last>85</last></source>
+        </sq-item>
+        <sq-item><id>4</id><sq>4 5</sq><sq-parent-id>1</sq-parent-id>
+        <source><name>meta</name><first>31</first><last>38</last></source>
+        <source><name>content</name><first>86</first><last>120</last></source>
+        </sq-item>
+        <sq-item><id>7</id><sq>7 8</sq><sq-parent-id>5</sq-parent-id>
+        <source><name>meta</name><first>60</first><last>67</last></source>
+        <source><name>content</name><first>134</first><last>161</last></source>
+        </sq-item>
+        <sq-item><id>8</id><sq>8 9</sq><sq-parent-id>5</sq-parent-id>
+        <source><name>meta</name><first>68</first><last>75</last></source>
+        <source><name>content</name><first>162</first><last>193</last></source>
+        </sq-item>
+        <sq-item><id>11</id><sq>11 12</sq><sq-parent-id>9</sq-parent-id>
+        <source><name>meta</name><first>97</first><last>104</last></source>
+        <source><name>content</name><first>206</first><last>238</last></source>
+        </sq-item>
+        <sq-item><id>14</id><sq>14 15</sq><sq-parent-id>12</sq-parent-id>
+        <source><name>meta</name><first>126</first><last>133</last></source>
+        <source><name>content</name><first>251</first><last>267</last></source>
+        </sq-item>
+        <sq-item><id>17</id><sq>17 18</sq><sq-parent-id>15</sq-parent-id>
+        <source><name>meta</name><first>155</first><last>162</last></source>
+        <source><name>content</name><first>281</first><last>296</last></source>
+        </sq-item>
+        <sq-item><id>20</id><sq>20 21</sq><sq-parent-id>18</sq-parent-id>
+        <source><name>meta</name><first>184</first><last>191</last></source>
+        <source><name>content</name><first>309</first><last>336</last></source>
+        </sq-item>
+        <sq-item><id>23</id><sq>23 24</sq><sq-parent-id>21</sq-parent-id>
+        <source><name>meta</name><first>213</first><last>220</last></source>
+        <source><name>content</name><first>349</first><last>368</last></source>
+        </sq-item>
+        <sq-item><id>26</id><sq>26 27</sq><sq-parent-id>24</sq-parent-id>
+        <source><name>meta</name><first>242</first><last>249</last></source>
+        <source><name>content</name><first>382</first><last>396</last></source>
+        </sq-item>
+        <sq-item><id>29</id><sq>29 30</sq><sq-parent-id>27</sq-parent-id>
+        <source><name>meta</name><first>271</first><last>278</last></source>
+        <source><name>content</name><first>409</first><last>414</last></source>
+        </sq-item>
+        <sq-item><id>32</id><sq>32 33</sq><sq-parent-id>30</sq-parent-id>
+        <source><name>meta</name><first>300</first><last>307</last></source>
+        <source><name>content</name><first>419</first><last>450</last></source>
+        </sq-item>
+        <sq-item><id>33</id><sq>33 34</sq><sq-parent-id>30</sq-parent-id>
+        <source><name>meta</name><first>308</first><last>315</last></source>
+        <source><name>content</name><first>451</first><last>488</last></source>
+        </sq-item>
+</channel><channel><name>SPEAKER</name><count>10</count>
+        <sq-item><id>2</id><sq>2 3</sq><sq-parent-id>1</sq-parent-id>
+        <source><name>meta</name><first>12</first><last>22</last></source>
+        <source><name>content</name><first>43</first><last>54</last></source>
+        </sq-item>
+        <sq-item><id>6</id><sq>6 7</sq><sq-parent-id>5</sq-parent-id>
+        <source><name>meta</name><first>49</first><last>59</last></source>
+        <source><name>content</name><first>121</first><last>133</last></source>
+        </sq-item>
+        <sq-item><id>10</id><sq>10 11</sq><sq-parent-id>9</sq-parent-id>
+        <source><name>meta</name><first>86</first><last>96</last></source>
+        <source><name>content</name><first>194</first><last>205</last></source>
+        </sq-item>
+        <sq-item><id>13</id><sq>13 14</sq><sq-parent-id>12</sq-parent-id>
+        <source><name>meta</name><first>115</first><last>125</last></source>
+        <source><name>content</name><first>239</first><last>250</last></source>
+        </sq-item>
+        <sq-item><id>16</id><sq>16 17</sq><sq-parent-id>15</sq-parent-id>
+        <source><name>meta</name><first>144</first><last>154</last></source>
+        <source><name>content</name><first>268</first><last>280</last></source>
+        </sq-item>
+        <sq-item><id>19</id><sq>19 20</sq><sq-parent-id>18</sq-parent-id>
+        <source><name>meta</name><first>173</first><last>183</last></source>
+        <source><name>content</name><first>297</first><last>308</last></source>
+        </sq-item>
+        <sq-item><id>22</id><sq>22 23</sq><sq-parent-id>21</sq-parent-id>
+        <source><name>meta</name><first>202</first><last>212</last></source>
+        <source><name>content</name><first>337</first><last>348</last></source>
+        </sq-item>
+        <sq-item><id>25</id><sq>25 26</sq><sq-parent-id>24</sq-parent-id>
+        <source><name>meta</name><first>231</first><last>241</last></source>
+        <source><name>content</name><first>369</first><last>381</last></source>
+        </sq-item>
+        <sq-item><id>28</id><sq>28 29</sq><sq-parent-id>27</sq-parent-id>
+        <source><name>meta</name><first>260</first><last>270</last></source>
+        <source><name>content</name><first>397</first><last>408</last></source>
+        </sq-item>
+        <sq-item><id>31</id><sq>31 32</sq><sq-parent-id>30</sq-parent-id>
+        <source><name>meta</name><first>289</first><last>299</last></source>
+        <source><name>content</name><first>415</first><last>418</last></source>
+        </sq-item>
+</channel><channel><name>STAGEDIR</name><count>2</count>
+        <sq-item><id>0</id><sq>0 1</sq><sq-parent-id>-1</sq-parent-id>
+        <source><name>meta</name><first>0</first><last>11</last></source>
+        <source><name>content</name><first>0</first><last>42</last></source>
+        </sq-item>
+        <sq-item><id>34</id><sq>34 35</sq><sq-parent-id>-1</sq-parent-id>
+        <source><name>meta</name><first>326</first><last>337</last></source>
+        <source><name>content</name><first>489</first><last>495</last></source>
+        </sq-item>
+</channel></channels>
