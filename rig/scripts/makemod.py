@@ -4,7 +4,10 @@
 # -c LINE store -c SPEAKER store -c STAGEDIR store -c SPEECH store
 #
 
-from rig.modformat import STORE_FIELD_SEPERATOR, STORE_RECORD_SEPERATOR
+try:
+    from rig.modformat import STORE_FIELD_SEPERATOR, STORE_RECORD_SEPERATOR
+except ImportError:
+    print "please add the parent folder of your rig source tree to your PYTHONPATH"
 
 import sys, os, string
 try:
