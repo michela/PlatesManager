@@ -1,3 +1,6 @@
+'''Brings the rig up and does any necessary startup stuff.
+'''
+
 def main(options, *args):
     try:
         pass
