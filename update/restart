@@ -1,0 +1,4 @@
+#!/bin/sh
+# relies on sudo config
+
+sudo /usr/sbin/apache2ctl restart > /tmp/tmp.txt 2>&1

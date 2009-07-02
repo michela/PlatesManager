@@ -1,0 +1,57 @@
+/* CSS Document */
+
+.prompt {padding:10px;}
+.style3 {color: #009900}
+.style7 {color: #000000; font-size: large; }
+.style8 {color: #FF0000}
+.style10 {color: #000000; font-size: small; }
+img.ajaxloader {
+	min-height: 1em;
+    display: table-cell;
+	vertical-align: middle;
+    margin-left: auto;
+    margin-right: auto }
+h1 {color: #000000; font-size: x-large; }
+table.incoming_plates {
+	border-width: 1px 1px 1px 1px;
+	border-spacing: 2px;
+	border-style: hidden hidden hidden hidden;
+	border-color: gray gray gray gray;
+	border-collapse: separate;
+	background-color: white;
+}
+table.incoming_plates th {
+	border-width: 2px 2px 2px 2px;
+	padding: 2px 2px 2px 2px;
+	border-style: inset inset inset inset;
+	border-color: white white white white;
+	background-color: white;
+}
+table.incoming_plates td {
+	vertical-align:top;
+	border-width: 2px 2px 2px 2px;
+	padding: 2px 2px 2px 2px;
+	border-style: inset inset inset inset;
+	border-color: white white white white;
+	background-color: white;
+}
+
+/* jQuery lightBox plugin - Gallery style */
+#gallery {
+	background-color: #444;
+	padding: 10px;
+	width: 520px;
+}
+#gallery ul { list-style: none; }
+#gallery ul li { display: inline; }
+#gallery ul img {
+	border: 5px solid #3e3e3e;
+	border-width: 5px 5px 20px;
+}
+#gallery ul a:hover img {
+	border: 5px solid #fff;
+	border-width: 5px 5px 20px;
+	color: #fff;
+}
+#gallery ul a:hover { color: #fff; }
+	

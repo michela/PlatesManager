@@ -1,0 +1,66 @@
+<?xml version='1.0' encoding='utf-8'?>
+<config>
+<project>PROJECT NAME</project>
+<environment>DEV</environment>
+<debug>True</debug>
+<database>database</database>
+<username>user</username>
+<password>password</password>
+<ftpUser>user</ftpUser>
+<ftpPassword>password</ftpPassword>
+<emailfrom>"modfilms.net" &lt;reception@modfilms.net&gt;</emailfrom>
+<ftpdropbox>/tmp/dropbox</ftpdropbox>
+<smtpserver>mail.iinet.net.au</smtpserver>
+<httpServer>trac.modfilms.com</httpServer>
+<ftpServer>trac.modfilms.com</ftpServer>
+<platesXML>/home/www/plates/plates.xml</platesXML>
+<platesHTML>/home/www/plates/index.html</platesHTML>
+<publishPrefix>/backup/realmedia/sanc/sanc_post_production/sanc_preview</publishPrefix>
+<urlPrefix>http://trac.modfilms.com:7861/realmedia/sanc/sanc_post_production/sanc_preview</urlPrefix>
+<tracRendersEnv>/home/www-apps/trac/shots</tracRendersEnv>
+<tracShotsEnv>/home/www-apps/trac/shots</tracShotsEnv>
+<tracMailRecipients>['trac@chief']</tracMailRecipients>
+<frameRate>25</frameRate>
+<proxyWidth>720</proxyWidth>
+<proxyHeight>405</proxyHeight>
+<regexIgnore>[
+	'^\.in\.',
+	'^\.tmp\.',
+	'^\._',
+	'^\.DS_Store',
+	'\.jpeg$',
+	'\.jpg$',
+	'\.tiff$'
+]</regexIgnore>
+<ftpFoldersDisplay>['/iaa/inbound','/iaa/outbound']</ftpFoldersDisplay>
+<ftpFoldersWhiteList>['/']</ftpFoldersWhiteList>
+<ftpFoldersBlackList>['/Maya','/DEBUG']</ftpFoldersBlackList>
+<adminUser>['michela']</adminUser>
+<disciplines>[
+	'anim',
+	'animation',
+	'roto',
+	'rotoscoping',
+	'comp',
+	'test',
+	'previs',
+	'previz',
+	'postvis',
+	'postviz',
+	'plate',
+	'plates',
+	'3d',
+	'2d',
+	'track',
+	'matte',
+	'motion_tracking',
+	'tracking',
+	'motiontracking',
+	'particles',
+	'fx',
+	'ui',
+	'ui_graphics',
+	'motion_graphics'
+]
+</disciplines>
+</config>
